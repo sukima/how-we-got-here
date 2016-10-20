@@ -1,0 +1,68 @@
+{{#link-to "entries.index" tagName="button" type="button"}}&lt;~ Back{{/link-to}}
+<form>
+  {{#if error}}
+    <div class="alert alert-danger">
+      {{error}}
+    </div>
+  {{/if}}
+
+  <fieldset>
+    <label for={{concat elementId "-author"}}>Name:</label>
+    {{input type="text" size="40" value=model.author placeholder=(fake-name) id=(concat elementId "-author")}}
+  </fieldset>
+
+  <fieldset>
+    <label for={{concat elementId "-title"}}>Witty Title:</label>
+    {{input type="text" size="50" value=model.wittyTitle placeholder=(fake-title) id=(concat elementId "-title")}}
+  </fieldset>
+
+  <fieldset>
+    <table style="float:left">
+      <thead>
+        <tr>
+          <th>Actions</th>
+          <th>Prelude</th>
+          <th>Sentence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each model.steps as |step index|}}
+          <tr>
+            <td>
+              {{#unless (readonly-prelude step.prelude)}}
+                <button type="button" onclick={{action "removeStep" index}}>X</button>
+                &nbsp;
+                <button type="button" disabled={{lte index 1}} onclick={{action "moveStepUp" index}}>-</button>
+                <button type="button" disabled={{is-last index model.steps}} onclick={{action "moveStepDown" index}}>+</button>
+              {{/unless}}
+            </td>
+            <td>
+              {{prelude-chooser choice=(readonly step.prelude) update=(action (mut step.prelude))}}
+            </td>
+            <td>
+              {{input type="text" size="60" placeholder=(fake-words) value=step.text}}.
+            </td>
+          </tr>
+        {{/each}}
+        <tr>
+          <td></td>
+          <td>
+            <button type="button" onclick={{action "addStep"}}>And Then&hellip;</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>{{postlude}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>{{model.prose}}</p>
+  </fieldset>
+
+  <fieldset>
+    <button type="submit" disabled={{saving}} onclick={{perform save}}>Save</button>
+    {{#if saving}}<span>Saving&hellip;</span>{{/if}}
+  </fieldset>
+</form>

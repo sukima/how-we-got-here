@@ -1,0 +1,17 @@
+<h1>Entries</h1>
+
+{{#link-to "entries.new" tagName="button"}}Add Entry{{/link-to}}
+
+{{#each entries as |entry|}}
+  <hr>
+  <div class="entry-item">
+    <img src={{entry.avatar}}>
+    <h5>{{entry.fullTitle}}</h5>
+    <p><small>{{entry.createdAt}}</small></p>
+    <p>{{entry.prose}}</p>
+  </div>
+{{else}}
+  <div class="entry-item">
+    There are no entries yet. {{#link-to "entries.new"}}How about you add one?{{/link-to}}
+  </div>
+{{/each}}

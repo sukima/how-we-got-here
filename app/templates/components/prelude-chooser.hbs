@@ -1,0 +1,11 @@
+{{#if (readonly-prelude choice)}}
+  {{get preludes choice}}
+{{else}}
+  <select onchange={{action (action update) value="target.value"}}>
+    {{#each preludeKeys as |preludeKey|}}
+      <option value={{preludeKey}} selected={{eq choice preludeKey}}>
+        {{get preludes preludeKey}}
+      </option>
+    {{/each}}
+  </select>
+{{/if}}
