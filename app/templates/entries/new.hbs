@@ -1,68 +1,122 @@
-{{#link-to "entries.index" tagName="button" type="button"}}&lt;~ Back{{/link-to}}
-<form>
-  {{#if error}}
-    <div class="alert alert-danger">
-      {{error}}
-    </div>
-  {{/if}}
+<h2>
+  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
+    <span class="glyphicon glyphicon-chevron-left"></span> Back
+  </button>
+  Add a new entry
+</h2>
 
-  <fieldset>
-    <label for={{concat elementId "-author"}}>Name:</label>
-    {{input type="text" size="40" value=model.author placeholder=(fake-name) id=(concat elementId "-author")}}
-  </fieldset>
+{{#if error}}
+  {{#bs-alert type="danger"}}
+    {{error}}
+  {{/bs-alert}}
+{{/if}}
 
-  <fieldset>
-    <label for={{concat elementId "-title"}}>Witty Title:</label>
-    {{input type="text" size="50" value=model.wittyTitle placeholder=(fake-title) id=(concat elementId "-title")}}
-  </fieldset>
+{{#bs-form-group}}
+  <label for={{concat elementId "-author"}}>Name:</label>
+  {{input
+      type="text"
+      size="40"
+      class="form-control"
+      value=model.author
+      placeholder=(fake-name)
+      id=(concat elementId "-author")}}
+{{/bs-form-group}}
 
-  <fieldset>
-    <table style="float:left">
+{{#bs-form-group}}
+  <label for={{concat elementId "-title"}}>Witty Title:</label>
+  {{input
+      type="text"
+      size="50"
+      class="form-control"
+      value=model.wittyTitle
+      placeholder=(fake-title)
+      id=(concat elementId "-title")}}
+{{/bs-form-group}}
+
+{{#bs-form-group}}
+  <label for={{concat elementId "-email"}}>Email:</label>
+  {{input
+      type="email"
+      size="50"
+      class="form-control"
+      value=model.email
+      placeholder=(fake-email)
+      id=(concat elementId "-email")
+      change=(action "setAvatar")}}
+  <span class="help-block">
+    Email is hashed not saved.
+    {{#if model.email}}
+      <small>(Hash: <code>{{md5 model.email}}</code>)</small>
+    {{/if}}
+  </span>
+{{/bs-form-group}}
+
+<div class="row">
+  <div class="col-lg-6">
+    <table class="table pull-left">
       <thead>
         <tr>
           <th>Actions</th>
-          <th>Prelude</th>
           <th>Sentence</th>
         </tr>
       </thead>
       <tbody>
         {{#each model.steps as |step index|}}
           <tr>
-            <td>
+            <td nowrap style="min-width: 130px">
               {{#unless (readonly-prelude step.prelude)}}
-                <button type="button" onclick={{action "removeStep" index}}>X</button>
+                <button type="button" class="btn btn-warning btn-sm" onclick={{action "removeStep" index}}>
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="sr-only">Remove</span>
+                </button>
                 &nbsp;
-                <button type="button" disabled={{lte index 1}} onclick={{action "moveStepUp" index}}>-</button>
-                <button type="button" disabled={{is-last index model.steps}} onclick={{action "moveStepDown" index}}>+</button>
+                <button type="button" class="btn btn-default btn-sm" disabled={{lte index 1}} onclick={{action "moveStepUp" index}}>
+                  <span class="glyphicon {{if (lte index 1) 'glyphicon-triangle-top' 'glyphicon-chevron-up'}}"></span>
+                  <span class="sr-only">Move up</span>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" disabled={{is-last index model.steps}} onclick={{action "moveStepDown" index}}>
+                  <span class="glyphicon {{if (is-last index model.steps) 'glyphicon-triangle-bottom' 'glyphicon-chevron-down'}}"></span>
+                  <span class="sr-only">Move down</span>
+                </button>
               {{/unless}}
             </td>
             <td>
-              {{prelude-chooser choice=(readonly step.prelude) update=(action (mut step.prelude))}}
-            </td>
-            <td>
-              {{input type="text" size="60" placeholder=(fake-words) value=step.text}}.
+              <div class="input-group">
+                {{prelude-chooser
+                    choice=(readonly step.prelude)
+                    update=(action (mut step.prelude))}}
+                {{input
+                    type="text"
+                    size="60"
+                    class="form-control"
+                    placeholder=(fake-words)
+                    value=step.text}}
+                <span class="input-group-addon">.</span>
+              </div>
             </td>
           </tr>
         {{/each}}
         <tr>
           <td></td>
           <td>
-            <button type="button" onclick={{action "addStep"}}>And Then&hellip;</button>
+            <button type="button" class="btn btn-default" onclick={{action "addStep"}}>And Then&hellip;</button>
           </td>
-          <td></td>
         </tr>
         <tr>
           <td></td>
-          <td></td>
-          <td>{{postlude}}</td>
+          <td>{{postlude}}.</td>
         </tr>
       </tbody>
     </table>
-    <p>{{model.prose}}</p>
-  </fieldset>
+  </div>
 
-  <fieldset>
-    <button type="submit" disabled={{saving}} onclick={{perform save}}>Save</button>
-    {{#if saving}}<span>Saving&hellip;</span>{{/if}}
-  </fieldset>
-</form>
+  <div class="col-lg-6">
+    {{entry-card class="box with-shadow" entry=model}}
+  </div>
+</div>
+
+{{#bs-form-group}}
+  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>Cancel</button>
+  <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{perform save}}>Save</button>
+  {{#if saving}}<span>Saving&hellip;</span>{{/if}}
+{{/bs-form-group}}

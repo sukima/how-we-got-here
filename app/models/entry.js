@@ -16,6 +16,7 @@ export default Model.extend({
   author: attr('string'),
   wittyTitle: attr('string'),
   avatar: attr('string'),
+  emailHash: attr('string'),
   steps: attr({defaultValue() { return [makeStep()]; }}),
 
   prose: computed('steps.@each.{prelude,text}', {
@@ -29,7 +30,7 @@ export default Model.extend({
         })
         .compact()
         .join(' ');
-      return `${prose} ${POSTLUDE}`;
+      return `${prose} ${POSTLUDE}.`;
     }
   }),
 
@@ -48,5 +49,11 @@ export default Model.extend({
   addNewStep(prelude, text) {
     get(this, 'steps').pushObject(makeStep(prelude, text));
     return this;
+  },
+
+  hasTerm(term) {
+    return get(this, 'author').indexOf(term) > -1 ||
+      get(this, 'wittyTitle').indexOf(term) > -1 ||
+      get(this, 'steps').some(({text}) => text.indexOf(term) > -1);
   }
 });

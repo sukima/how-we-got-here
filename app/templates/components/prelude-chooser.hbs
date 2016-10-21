@@ -1,11 +1,17 @@
 {{#if (readonly-prelude choice)}}
-  {{get preludes choice}}
+  <span class="input-group-addon">
+    {{get preludes choice}}
+  </span>
 {{else}}
-  <select onchange={{action (action update) value="target.value"}}>
-    {{#each preludeKeys as |preludeKey|}}
-      <option value={{preludeKey}} selected={{eq choice preludeKey}}>
-        {{get preludes preludeKey}}
-      </option>
-    {{/each}}
-  </select>
+  {{#bs-dropdown class="input-group-btn"}}
+    {{#bs-dropdown-button}}
+      {{get preludes choice}}
+      <span class="caret"></span>
+    {{/bs-dropdown-button}}
+    {{#bs-dropdown-menu}}
+      {{#each preludeKeys as |preludeKey|}}
+        <li><a href="#" onclick={{action "updatePrelude" preludeKey}}>{{get preludes preludeKey}}</a></li>
+      {{/each}}
+    {{/bs-dropdown-menu}}
+  {{/bs-dropdown}}
 {{/if}}

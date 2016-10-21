@@ -1,0 +1,28 @@
+.entry-card .avatar {
+  width: 64px;
+  height: 64px;
+  margin: 2px 10px 10px 2px;
+}
+
+.entry-card .author {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.entry-card date {
+  font-size: 0.9em;
+}
+
+.entry-card p {
+  font-size: 1.1em;
+}
+
+.box {
+  padding: 10px 10px 0 10px;
+  border: thin solid black;
+  border-radius: 6px;
+}
+
+.box.with-shadow {
+  box-shadow: 4px 4px 4px;
+}

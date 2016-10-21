@@ -1,17 +1,28 @@
-<h1>Entries</h1>
+<h1>
+  {{postlude}}&hellip;
+  {{#link-to "entries.new" tagName="button" class="btn btn-default" type="button"}}
+    Add an entry
+  {{/link-to}}
+  <button type="button" class="btn btn-link" onclick={{action (mut hideSearch) (not hideSearch)}}>
+    Search
+  </button>
+</h1>
 
-{{#link-to "entries.new" tagName="button"}}Add Entry{{/link-to}}
+{{#bs-collapse collapsed=hideSearch}}
+  <div class="input-group">
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-search"></span>
+    </span>
+    {{input type="text" class="form-control" value=query}}
+  </div>
+{{/bs-collapse}}
 
 {{#each entries as |entry|}}
   <hr>
-  <div class="entry-item">
-    <img src={{entry.avatar}}>
-    <h5>{{entry.fullTitle}}</h5>
-    <p><small>{{entry.createdAt}}</small></p>
-    <p>{{entry.prose}}</p>
-  </div>
+  {{entry-card entry=entry}}
 {{else}}
-  <div class="entry-item">
+  <hr>
+  <p>
     There are no entries yet. {{#link-to "entries.new"}}How about you add one?{{/link-to}}
-  </div>
+  </p>
 {{/each}}

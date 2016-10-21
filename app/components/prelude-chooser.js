@@ -1,10 +1,17 @@
 import Ember from 'ember';
 import { PRELUDES, PRELUDE_KEYS } from '../utils/preludes';
 
-const { Component } = Ember;
+const { Component, get } = Ember;
 
 export default Component.extend({
-  tagName: 'span',
+  tagName: '',
   preludes: PRELUDES,
-  preludeKeys: PRELUDE_KEYS
+  preludeKeys: PRELUDE_KEYS,
+
+  actions: {
+    updatePrelude(preludeKey) {
+      get(this, 'update')(preludeKey);
+      return false;
+    }
+  }
 });
