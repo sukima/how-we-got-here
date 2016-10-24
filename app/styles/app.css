@@ -26,3 +26,9 @@
 .box.with-shadow {
   box-shadow: 4px 4px 4px;
 }
+
+.auth-code-container {
+  max-width: 440px;
+  padding: 15px;
+  margin: 0 auto;
+}

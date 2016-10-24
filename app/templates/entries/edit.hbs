@@ -2,10 +2,10 @@
   <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
     <span class="glyphicon glyphicon-chevron-left"></span> Back
   </button>
-  Add a new entry
+  Edit your entry
 </h2>
 
-{{entries/edit-form entry=model checkValidity=(action "validateUniqueEmail")}}
+{{entries/edit-form needsEmail=false entry=model}}
 
 {{#bs-form-group}}
   <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>Cancel</button>

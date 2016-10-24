@@ -1,0 +1,99 @@
+{{entries/edit-field
+    type="text"
+    size=40
+    label="Name:"
+    value=entry.author
+    errors=entry.errors.author
+    placeholder=(fake-name)}}
+
+{{entries/edit-field
+    type="text"
+    size=50
+    label="Witty Title:"
+    value=entry.wittyTitle
+    errors=entry.errors.wittyTitle
+    placeholder=(fake-title)}}
+
+{{#if needsEmail}}
+  {{#entries/edit-field
+      type="email"
+      size=50
+      label="Email:"
+      value=entry.email
+      errors=entry.errors.email
+      placeholder=(fake-email)
+      update=(action "setAvatar") as |errorMessages|}}
+    {{#if errorMessages}}
+      {{join errorMessages delim=". "}}.
+    {{else}}
+      Email is hashed not saved.
+    {{/if}}
+    {{#if entry.email}}
+      <small><code>{{md5 entry.email}}</code></small>
+    {{/if}}
+  {{/entries/edit-field}}
+{{/if}}
+
+<div class="row">
+  <div class="col-lg-6">
+    <table class="table pull-left">
+      <thead>
+        <tr>
+          <th>Actions</th>
+          <th>Sentence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each entry.steps as |step index|}}
+          <tr>
+            <td nowrap style="min-width: 130px">
+              {{#unless (readonly-prelude step.prelude)}}
+                <button type="button" class="btn btn-warning btn-sm" onclick={{action "removeStep" index}}>
+                  <span class="glyphicon glyphicon-remove"></span>
+                  <span class="sr-only">Remove</span>
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-default btn-sm" disabled={{lte index 1}} onclick={{action "moveStepUp" index}}>
+                  <span class="glyphicon {{if (lte index 1) 'glyphicon-triangle-top' 'glyphicon-chevron-up'}}"></span>
+                  <span class="sr-only">Move up</span>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" disabled={{is-last index entry.steps}} onclick={{action "moveStepDown" index}}>
+                  <span class="glyphicon {{if (is-last index entry.steps) 'glyphicon-triangle-bottom' 'glyphicon-chevron-down'}}"></span>
+                  <span class="sr-only">Move down</span>
+                </button>
+              {{/unless}}
+            </td>
+            <td>
+              <div class="input-group">
+                {{prelude-chooser
+                    choice=(readonly step.prelude)
+                    update=(action (mut step.prelude))}}
+                {{input
+                    type="text"
+                    size="60"
+                    class="form-control"
+                    placeholder=(fake-words)
+                    value=step.text}}
+                <span class="input-group-addon">.</span>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+        <tr>
+          <td></td>
+          <td>
+            <button type="button" class="btn btn-default" onclick={{action "addStep"}}>And Then&hellip;</button>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>{{postlude}}.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-lg-6">
+    {{entry-card class="box with-shadow" entry=entry}}
+  </div>
+</div>

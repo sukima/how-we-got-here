@@ -1,12 +1,20 @@
 import Ember from 'ember';
 
-const { Route, get, inject: { service } } = Ember;
+const { Route, get, set, inject: { service }, RSVP } = Ember;
 
 export default Route.extend({
   store: service(),
 
   model() {
-    return get(this, 'store').createRecord('entry');
+    return RSVP.hash({
+      entries: this.modelFor('entries'),
+      newEntry: get(this, 'store').createRecord('entry')
+    });
+  },
+
+  setupController(controller, {entries, newEntry}) {
+    set(controller, 'model', newEntry);
+    set(controller, 'entries', entries);
   },
 
   resetController(controller, isExiting) {

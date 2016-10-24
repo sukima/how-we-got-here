@@ -1,0 +1,18 @@
+{{#bs-form-group validation=(if errors 'error')}}
+  <label class="control-label" for={{concat elementId "-input"}}>
+    {{label}}
+  </label>
+  {{input
+      class="form-control"
+      type=type
+      size=size
+      value=value
+      placeholder=placeholder
+      id=(concat elementId "-input")
+      change=(action "optionalChange")}}
+  {{#if hasBlock}}
+    <span class="help-block">
+      {{yield errorMessages}}
+    </span>
+  {{/if}}
+{{/bs-form-group}}

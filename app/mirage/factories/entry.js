@@ -10,6 +10,7 @@ export default Factory.extend({
   createdAt() { return faker.date.past(); },
   author() { return faker.name.findName(); },
   wittyTitle() { return faker.name.title(); },
+  emailHash() { return '3858f62230ac3c915f300c664312c63f'; }, // md5('foobar')
   avatar() { return faker.internet.avatar(); },
   steps() {
     let size = faker.random.number({min: 1, max: 10});
