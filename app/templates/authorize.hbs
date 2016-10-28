@@ -5,6 +5,7 @@
     <div class="form-group">
       <label for="auth-email" class="control-label">Email</label>
       {{input type="email" id="auth-email" class="form-control" value=email}}
+      {{email-help-block hashValue=(readonly email)}}
     </div>
     <div class="form-group">
       <label for="auth-code" class="col-sm-5 control-label">Authenticator code:</label>

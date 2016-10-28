@@ -1,9 +1,4 @@
-<h2>
-  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
-    <span class="glyphicon glyphicon-chevron-left"></span> Back
-  </button>
-  Add a new entry
-</h2>
+<h1>Add a new entry</h1>
 
 {{entries/edit-form entry=model checkValidity=(action "validateUniqueEmail")}}
 

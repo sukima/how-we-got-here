@@ -23,19 +23,12 @@
       errors=entry.errors.email
       placeholder=(fake-email)
       update=(action "setAvatar") as |errorMessages|}}
-    {{#if errorMessages}}
-      {{join errorMessages delim=". "}}.
-    {{else}}
-      Email is hashed not saved.
-    {{/if}}
-    {{#if entry.email}}
-      <small><code>{{md5 entry.email}}</code></small>
-    {{/if}}
+    {{email-help-block tagName="" hashValue=(readonly entry.email) label=(join errorMessages delim=". ")}}
   {{/entries/edit-field}}
 {{/if}}
 
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <table class="table pull-left">
       <thead>
         <tr>
@@ -93,7 +86,7 @@
     </table>
   </div>
 
-  <div class="col-lg-6">
+  <div class="col-lg-5">
     {{entry-card class="box with-shadow" entry=entry}}
   </div>
 </div>

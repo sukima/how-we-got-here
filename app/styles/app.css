@@ -1,12 +1,17 @@
-.entry-card .avatar {
+.avatar {
   width: 64px;
   height: 64px;
   margin: 2px 10px 10px 2px;
 }
 
+.header .avatar {
+  margin-top: 10px;
+}
+
 .entry-card .author {
   font-size: 1.1em;
   font-weight: bold;
+  margin-top: 5px;
 }
 
 .entry-card date {
@@ -25,6 +30,10 @@
 
 .box.with-shadow {
   box-shadow: 4px 4px 4px;
+}
+
+.box-action {
+  margin: 10px;
 }
 
 .auth-code-container {

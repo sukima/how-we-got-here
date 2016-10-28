@@ -7,7 +7,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('auth', function () {
+  this.route('authorize', function () {
     this.route('recover');
   });
 

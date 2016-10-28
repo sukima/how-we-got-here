@@ -1,9 +1,38 @@
+{{#if myEntry.avatar}}
+  {{user-avatar entry=myEntry class="header pull-right"}}
+{{/if}}
+
 <h1>
   {{postlude}}&hellip;
-  {{#link-to "entries.new" tagName="button" class="btn btn-default" type="button"}}
-    Add an entry
-  {{/link-to}}
+
+  {{#if (can "create entry")}}
+    {{#link-to "entries.new" tagName="button" class="btn btn-default" type="button"}}
+      <span class="glyphicon glyphicon-plus"></span>
+      Add an entry
+    {{/link-to}}
+  {{/if}}
+
+  {{#if (can "edit entry" myEntry)}}
+    {{#link-to "entries.edit" myEntry tagName="button" class="btn btn-default" type="button"}}
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit my entry
+    {{/link-to}}
+  {{/if}}
+
+  {{#if session.isAuthenticated}}
+    <button type="button" class="btn btn-link" onclick={{action "invalidateSession"}}>
+      <span class="glyphicon glyphicon-log-out"></span>
+      Logout
+    </button>
+  {{else}}
+    {{#link-to "authorize" tagName="button" class="btn btn-default" type="button"}}
+      <span class="glyphicon glyphicon-log-in"></span>
+      Login
+    {{/link-to}}
+  {{/if}}
+
   <button type="button" class="btn btn-link" onclick={{action (mut hideSearch) (not hideSearch)}}>
+    <span class="glyphicon glyphicon-search"></span>
     Search
   </button>
 </h1>
@@ -19,7 +48,13 @@
 
 {{#each entries as |entry|}}
   <hr>
-  {{entry-card entry=entry}}
+  {{#if (can "edit entry" entry)}}
+    {{#link-to "entries.edit" entry tagName="button" class="btn btn-default box-action pull-right" type="button"}}
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit entry
+    {{/link-to}}
+  {{/if}}
+  {{entry-card entry=entry class=(if (eq myEntry.id entry.id) 'box')}}
 {{else}}
   <hr>
   <p>
