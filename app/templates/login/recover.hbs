@@ -1,0 +1,21 @@
+<h1>Finding yourself&hellip;</h1>
+
+<p>Sorry to hear that you lost your authenticator identity. When you first registered you sealed the deal with a secret. Now is the time to resurecct that secret and enter it in below. Then a new authenticator QR Code will render for you.</p>
+
+<div class="form-group">
+  <label class="control-label" for="recover-email">Email</label>
+  {{input type="email" id="recover-email" class="form-control" value=email}}
+  {{email-help-block hashValue=(readonly email)}}
+</div>
+
+<div class="form-group">
+  <label class="control-label" for="recover-pepper">Secret</label>
+  {{input type="password" id="recover-pepper" class="form-control" value=pepper}}
+</div>
+
+<div class="form-group">
+  <button type="submit" class="btn btn-block btn-primary" onclick={{action "recover"}}>
+    <span class="glyphicon glyphicon-qrcode"></span>
+    Recover identity
+  </button>
+</div>

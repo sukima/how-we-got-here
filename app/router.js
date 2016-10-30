@@ -7,13 +7,14 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('authorize', function () {
+  this.route('login', function () {
     this.route('recover');
+    this.route('verify', {path: ':emailHash'});
   });
 
   this.route('entries', function () {
     this.route('new');
-    this.route('edit', {path: ':id/edit'});
+    this.route('edit', {path: ':id'});
   });
 });
 

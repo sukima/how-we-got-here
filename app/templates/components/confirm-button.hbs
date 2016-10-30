@@ -1,0 +1,10 @@
+{{#if askForConfirmation.isIdle}}
+  <span class="glyphicon {{icon}}"></span>
+  {{label}}
+{{else}}
+  <span class="glyphicon glyphicon-alert"></span>
+  {{confirmLabel}}
+  {{#if step}}
+    <span class="badge">{{step}}</span>
+  {{/if}}
+{{/if}}

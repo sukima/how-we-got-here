@@ -1,0 +1,34 @@
+<h1>Been here before?</h1>
+
+<p>If you have already submitted an entry please authenticate by entering your <em>authenticator code</em>. Otherwise join us by clicking the <em>Create a new entry</em> button.</p>
+
+<div class="form-horizontal">
+  <div class="form-group">
+    <label for="auth-email" class="control-label">Email</label>
+    {{input type="email" id="auth-email" class="form-control" value=email}}
+    {{email-help-block hashValue=(readonly email)}}
+  </div>
+
+  <div class="form-group">
+    <label for="auth-code" class="col-sm-5 control-label">Authenticator code:</label>
+    <div class="col-sm-7">
+      {{input type="number" id="auth-code" class="form-control" value=authPin}}
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <button type="submit" class="btn btn-block btn-primary" onclick={{action "authenticate"}}>
+    <span class="glyphicon glyphicon-log-in"></span>
+    Authenticate
+  </button>
+
+  {{#link-to "entries.new" tagName="button" class="btn btn-block btn-default"}}
+    <span class="glyphicon glyphicon-plus"></span>
+    Create a new entry
+  {{/link-to}}
+
+  {{#link-to "login.recover" class="btn btn-block btn-link"}}
+    I've lost my authenticator credentials
+  {{/link-to}}
+</div>

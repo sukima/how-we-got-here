@@ -1,14 +1,21 @@
-<h2>
-  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
-    <span class="glyphicon glyphicon-chevron-left"></span> Back
-  </button>
-  Edit your entry
-</h2>
+<h1>Edit your entry</h1>
 
 {{entries/edit-form needsEmail=false entry=model}}
 
 {{#bs-form-group}}
-  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>Cancel</button>
-  <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{perform save}}>Save</button>
+  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{!action "cancel"}}>
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    Cancel
+  </button>
+  <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{!perform save}}>
+    <span class="glyphicon glyphicon-save"></span>
+    Save
+  </button>
+  <span class="spacer"></span>
+  {{confirm-button
+      icon="glyphicon-trash"
+      label="Delete entry"
+      confirmLabel="Are you sure (click again)? You can not undo this!"
+      confirmed=(action "deleteRecord")}}
   {{#if saving}}<span>Saving&hellip;</span>{{/if}}
 {{/bs-form-group}}

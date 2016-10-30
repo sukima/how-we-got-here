@@ -1,6 +1,7 @@
 /* globals md5 */
 import Ember from 'ember';
 import { POSTLUDE } from '../../utils/preludes';
+import { makeStep } from '../../utils/steps';
 
 const { Component, get, set, tryInvoke } = Ember;
 
@@ -38,7 +39,7 @@ export default Component.extend({
     },
 
     addStep() {
-      get(this, 'entry').addNewStep('andThen');
+      get(this, 'entry.steps').pushObject(makeStep('andThen'));
     },
 
     setAvatar() {

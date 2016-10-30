@@ -1,13 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { PRELUDES, POSTLUDE } from '../utils/preludes';
+import { makeStep } from '../utils/steps';
 
-const { computed, get, isBlank } = Ember;
+const { get } = Ember;
 const { Model, attr } = DS;
-
-function makeStep(prelude = '_start', text = '') {
-  return {prelude, text};
-}
 
 export default Model.extend({
   createdAt: attr('date', {
@@ -18,38 +14,6 @@ export default Model.extend({
   avatar: attr('string'),
   emailHash: attr('string'),
   steps: attr({defaultValue() { return [makeStep()]; }}),
-
-  prose: computed('steps.@each.{prelude,text}', {
-    get() {
-      let prose = get(this, 'steps')
-        .map(step => {
-          if (isBlank(step.text)) {
-            return null;
-          }
-          return `${PRELUDES[step.prelude]} ${step.text}.`;
-        })
-        .compact()
-        .join(' ');
-      return `${prose} ${POSTLUDE}.`;
-    }
-  }),
-
-  fullTitle: computed('author', 'wittyTitle', {
-    get() {
-      let author = get(this, 'author');
-      let wittyTitle = get(this, 'wittyTitle');
-      if (isBlank(wittyTitle)) {
-        return author;
-      } else {
-        return `${author} (${wittyTitle})`;
-      }
-    }
-  }),
-
-  addNewStep(prelude, text) {
-    get(this, 'steps').pushObject(makeStep(prelude, text));
-    return this;
-  },
 
   hasTerm(term) {
     return get(this, 'author').indexOf(term) > -1 ||

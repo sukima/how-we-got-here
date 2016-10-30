@@ -3,7 +3,13 @@
 {{entries/edit-form entry=model checkValidity=(action "validateUniqueEmail")}}
 
 {{#bs-form-group}}
-  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>Cancel</button>
-  <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{perform save}}>Save</button>
-  {{#if saving}}<span>Saving&hellip;</span>{{/if}}
+  <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    Cancel
+  </button>
+
+  <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{perform save}}>
+    <span class="glyphicon glyphicon-save"></span>
+    Register and Save
+  </button>
 {{/bs-form-group}}

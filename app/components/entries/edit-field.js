@@ -17,6 +17,7 @@ function getMostSignificantValue(obj, selector) {
 
 export default Component.extend({
   type: 'text',
+  required: false,
 
   errorMessages: computed('errors.[]', {
     get() {
