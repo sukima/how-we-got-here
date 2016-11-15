@@ -13,6 +13,7 @@ export default Model.extend({
   wittyTitle: attr('string'),
   avatar: attr('string'),
   emailHash: attr('string'),
+  href: attr('string'),
   steps: attr({defaultValue() { return [makeStep()]; }}),
 
   hasTerm(term) {

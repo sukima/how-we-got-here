@@ -10,10 +10,18 @@
 {{entries/edit-field
     type="text"
     size=50
-    label="Witty Title:"
+    label="Witty Title: (optional)"
     propertyName="wittyTitle"
     value=entry.wittyTitle
     placeholder=(fake-title)}}
+
+{{entries/edit-field
+    type="url"
+    size=50
+    label="Personal Website: (optional)"
+    propertyName="href"
+    value=entry.href
+    placeholder=(fake-url)}}
 
 {{#if needsEmail}}
   {{#entries/edit-field

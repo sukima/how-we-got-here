@@ -1,3 +1,4 @@
+/* global md5 */
 import { Factory, faker } from 'ember-cli-mirage';
 import { PRELUDE_KEYS } from '../../utils/preludes';
 
@@ -10,8 +11,9 @@ export default Factory.extend({
   createdAt() { return faker.date.past(); },
   author() { return faker.name.findName(); },
   wittyTitle() { return faker.name.title(); },
-  emailHash() { return '3858f62230ac3c915f300c664312c63f'; }, // md5('foobar')
+  emailHash() { return md5(faker.internet.email()); },
   avatar() { return faker.internet.avatar(); },
+  href() { return faker.internet.url(); },
   steps() {
     let size = faker.random.number({min: 1, max: 10});
     let steps = [

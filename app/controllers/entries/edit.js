@@ -1,12 +1,10 @@
 import Ember from 'ember';
-import { validatePresence } from 'ember-changeset-validations/validators';
+import EntryValidations from '../../validations/entry';
 
 const { Controller } = Ember;
 
 export default Controller.extend({
-  entryValidations: {
-    author: validatePresence(true)
-  },
+  entryValidations: EntryValidations,
 
   actions: {
     deleteRecord() {

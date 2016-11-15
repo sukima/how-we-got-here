@@ -1,6 +1,14 @@
 <div class="clearfix">
   {{user-avatar entry=entry class="pull-left"}}
-  <p class="author">{{or fullTitle "Full Name (Witty Title)"}}</p>
+  <p class="author">
+    {{#if entry.href}}
+      <a href={{entry.href}} class="author" target="_blank">
+        {{or fullTitle "Full Name (Witty Title)"}}
+      </a>
+    {{else}}
+      {{or fullTitle "Full Name (Witty Title)"}}
+    {{/if}}
+  </p>
   <date>{{entry.createdAt}}</date>
 </div>
 

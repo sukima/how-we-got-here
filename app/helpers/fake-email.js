@@ -3,8 +3,8 @@ import { faker } from 'ember-cli-mirage';
 
 const { Helper } = Ember;
 
-export function fakeTitle() {
+export function fakeEmail() {
   return faker.internet.email();
 }
 
-export default Helper.helper(fakeTitle);
+export default Helper.helper(fakeEmail);
