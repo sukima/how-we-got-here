@@ -1,0 +1,7 @@
+<dl class="dl-horizontal">
+{{#each steps as |step|}}
+  <dt class="prelude">{{get preludes step.prelude}}</dt>
+  <dd>{{step.text}}.</dd>
+{{/each}}
+  <dd class="postlude">{{postlude}}.</dd>
+</dl>

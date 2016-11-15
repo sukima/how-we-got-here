@@ -1,7 +1,7 @@
 export const PRELUDES = {
   _start: 'I started out',
-  andThen: 'And then',
-  also: 'Also,'
+  andThen: 'and then',
+  also: 'also,'
 };
 
 export const POSTLUDE = 'And that is how I got here';
