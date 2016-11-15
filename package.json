@@ -24,6 +24,7 @@
     "co-express": "^1.2.2",
     "ember-ajax": "^2.0.1",
     "ember-bootstrap": "0.11.0",
+    "ember-bootstrap-changeset-validations": "0.1.1",
     "ember-can": "0.8.1",
     "ember-changeset": "1.2.0",
     "ember-changeset-validations": "1.2.4",

@@ -1,17 +1,20 @@
 <h1>Edit your entry</h1>
 
-{{entries/edit-form needsEmail=false entry=model}}
+{{entries/edit-form needsEmail=false entry=(changeset model entryValidations)}}
 
 {{#bs-form-group}}
   <button type="button" class="btn btn-default" disabled={{saving}} onclick={{!action "cancel"}}>
     <span class="glyphicon glyphicon-chevron-left"></span>
     Cancel
   </button>
+
   <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{!perform save}}>
     <span class="glyphicon glyphicon-save"></span>
     Save
   </button>
+
   <span class="spacer"></span>
+
   {{confirm-button
       icon="glyphicon-trash"
       label="Delete entry"

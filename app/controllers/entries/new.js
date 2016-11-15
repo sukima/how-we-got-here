@@ -1,47 +1,38 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { task } from 'ember-concurrency';
+import { validatePresence } from 'ember-changeset-validations/validators';
+import validateUniqueHash from '../../validators/validate-unique-hash';
 
 const {
-  Controller, get, set, isBlank,
-  computed: { alias }
+  Controller, get, set, getProperties,
+  computed, computed: { alias, mapBy }
 } = Ember;
 
-const { InvalidError } = DS;
-
 export default Controller.extend({
+  entryValidations: computed('emailHashes', {
+    get() {
+      return {
+        author: validatePresence(true),
+        email: [
+          validatePresence(true),
+          validateUniqueHash(getProperties(this, 'emailHashes'))
+        ]
+      };
+    }
+  }),
+
   error: alias('save.last.error'),
   saving: alias('save.isRunning'),
 
-  save: task(function * () {
-    let model = get(this, 'model');
+  emailHashes: mapBy('entries', 'emailHash'),
+
+  save: task(function * (model) {
     set(model, 'createdAt', new Date());
-
-    this.validateForm();
-
-    if (get(model, 'isValid')) {
-      yield model.save();
-    }
-
+    yield model.save();
     if (get(model, 'isValid')) {
       this.transitionToRoute('entries');
     }
   }).drop(),
-
-  validatePresenceOfEmail() {
-    if (isBlank(get(this, 'model.email'))) {
-      throw new InvalidError(null, 'Email is required');
-    }
-  },
-
-  validateUniquenessOfEmail() {
-    let md5hash = get(this, 'model.emailHash');
-    let entries = get(this, 'entries') || [];
-    let hashMatches = entries.filterBy('emailHash', md5hash);
-    if (hashMatches.length > 1) {
-      throw new InvalidError(null, 'Email is already taken');
-    }
-  },
 
   actions: {
     cancel() {

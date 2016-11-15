@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, get, set, isPresent, computed, run: { throttle } } = Ember;
+const { Component, get, set, run: { throttle }, tryInvoke } = Ember;
 
 const THROTTLE_DELAY = 700;
 
@@ -22,6 +22,7 @@ export default Component.extend({
     } finally {
       this.detachDocumentClick();
     }
+    tryInvoke(this, 'cancelled');
   }).restartable(),
 
   click() {
@@ -35,13 +36,14 @@ export default Component.extend({
       confirmTask.perform();
     } else {
       confirmTask.cancelAll();
-      get(this, 'confirmed')();
+      tryInvoke(this, 'confirmed');
     }
   },
 
   attachDocumentClick() {
     Ember.$(document).on(`click.${get(this, 'elementId')}`, () => {
       get(this, 'askForConfirmation').cancelAll();
+      tryInvoke(this, 'cancelled');
     });
   },
 

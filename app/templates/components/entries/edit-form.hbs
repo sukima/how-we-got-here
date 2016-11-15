@@ -2,17 +2,17 @@
     type="text"
     size=40
     label="Name:"
+    propertyName="author"
     required=true
     value=entry.author
-    errors=entry.errors.author
     placeholder=(fake-name)}}
 
 {{entries/edit-field
     type="text"
     size=50
     label="Witty Title:"
+    propertyName="wittyTitle"
     value=entry.wittyTitle
-    errors=entry.errors.wittyTitle
     placeholder=(fake-title)}}
 
 {{#if needsEmail}}
@@ -20,12 +20,13 @@
       type="email"
       size=50
       label="Email:"
+      propertyName="email"
+      showValidationOn="change"
+      showValidation=true
       required=true
       value=entry.email
-      errors=entry.errors.email
-      placeholder=(fake-email)
-      update=(action "setAvatar") as |errorMessages|}}
-    {{email-help-block tagName="" hashValue=(readonly entry.email) label=(join errorMessages delim=". ")}}
+      placeholder=(fake-email)}}
+    {{email-help-block tagName="" hashValue=(readonly entry.email)}}
   {{/entries/edit-field}}
 {{/if}}
 
