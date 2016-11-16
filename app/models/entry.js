@@ -14,6 +14,7 @@ export default Model.extend({
   avatar: attr('string'),
   emailHash: attr('string'),
   href: attr('string'),
+  secret: attr('string'),
   steps: attr({defaultValue() { return [makeStep()]; }}),
 
   hasTerm(term) {
