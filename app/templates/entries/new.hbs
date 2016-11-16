@@ -1,7 +1,7 @@
 <h1>Add a new entry</h1>
 
-{{#bs-form model=(changeset model entryValidations)}}
-  {{entries/edit-form entry=model checkValidity=(action "validateUniqueEmail")}}
+{{#bs-form model=(changeset model entryValidations) action=(perform save)}}
+  {{entries/edit-form}}
 
   {{#bs-form-group}}
     <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
@@ -9,7 +9,7 @@
       Cancel
     </button>
 
-    <button type="submit" class="btn btn-primary" disabled={{saving}} onclick={{perform save}}>
+    <button type="submit" class="btn btn-primary" disabled={{saving}}>
       <span class="glyphicon glyphicon-save"></span>
       Register and Save
     </button>

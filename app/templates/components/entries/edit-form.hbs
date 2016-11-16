@@ -4,7 +4,6 @@
     label="Name:"
     propertyName="author"
     required=true
-    value=entry.author
     placeholder=(fake-name)}}
 
 {{entries/edit-field
@@ -12,7 +11,6 @@
     size=50
     label="Witty Title: (optional)"
     propertyName="wittyTitle"
-    value=entry.wittyTitle
     placeholder=(fake-title)}}
 
 {{entries/edit-field
@@ -20,7 +18,6 @@
     size=50
     label="Personal Website: (optional)"
     propertyName="href"
-    value=entry.href
     placeholder=(fake-url)}}
 
 {{#if needsEmail}}
@@ -29,12 +26,10 @@
       size=50
       label="Email:"
       propertyName="email"
-      showValidationOn="change"
-      showValidation=true
       required=true
-      value=entry.email
-      placeholder=(fake-email)}}
-    {{email-help-block tagName="" hashValue=(readonly entry.email)}}
+      placeholder=(fake-email)
+      update=(action "setAvatar")}}
+    {{email-help-block tagName="" hashValue=(readonly model.email)}}
   {{/entries/edit-field}}
 {{/if}}
 
@@ -48,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each entry.steps as |step index|}}
+        {{#each model.steps as |step index|}}
           <tr>
             <td nowrap style="min-width: 130px">
               {{#unless (readonly-prelude step.prelude)}}
@@ -61,8 +56,8 @@
                   <span class="glyphicon {{if (lte index 1) 'glyphicon-triangle-top' 'glyphicon-chevron-up'}}"></span>
                   <span class="sr-only">Move up</span>
                 </button>
-                <button type="button" class="btn btn-default btn-sm" disabled={{is-last index entry.steps}} onclick={{action "moveStepDown" index}}>
-                  <span class="glyphicon {{if (is-last index entry.steps) 'glyphicon-triangle-bottom' 'glyphicon-chevron-down'}}"></span>
+                <button type="button" class="btn btn-default btn-sm" disabled={{is-last index model.steps}} onclick={{action "moveStepDown" index}}>
+                  <span class="glyphicon {{if (is-last index model.steps) 'glyphicon-triangle-bottom' 'glyphicon-chevron-down'}}"></span>
                   <span class="sr-only">Move down</span>
                 </button>
               {{/unless}}
@@ -99,6 +94,6 @@
   </div>
 
   <div class="col-lg-5">
-    {{entry-card class="box with-shadow" entry=entry}}
+    {{entry-card class="box with-shadow" entry=model}}
   </div>
 </div>

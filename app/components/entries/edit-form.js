@@ -2,8 +2,9 @@
 import Ember from 'ember';
 import { POSTLUDE } from '../../utils/preludes';
 import { makeStep } from '../../utils/steps';
+import Form from 'ember-bootstrap/components/bs-form';
 
-const { Component, get, set, tryInvoke } = Ember;
+const { Component, get, set, computed, computed: { reads } } = Ember;
 
 function gravatar(md5sum) {
   return `//www.gravatar.com/avatar/${md5sum}`;
@@ -13,9 +14,14 @@ export default Component.extend({
   postlude: POSTLUDE,
   needsEmail: true,
 
+  model: reads('form.model'),
+  form: computed(function() {
+    return this.nearestOfType(Form);
+  }),
+
   actions: {
     moveStepUp(index) {
-      let steps = get(this, 'entry.steps');
+      let steps = get(this, 'model.steps');
       if (index <= 1) {
         return;
       }
@@ -25,7 +31,7 @@ export default Component.extend({
     },
 
     moveStepDown(index) {
-      let steps = get(this, 'entry.steps');
+      let steps = get(this, 'model.steps');
       if (index >= steps.length - 1) {
         return;
       }
@@ -35,18 +41,17 @@ export default Component.extend({
     },
 
     removeStep(index) {
-      get(this, 'entry.steps').removeAt(index);
+      get(this, 'model.steps').removeAt(index);
     },
 
     addStep() {
-      get(this, 'entry.steps').pushObject(makeStep('andThen'));
+      get(this, 'model.steps').pushObject(makeStep('andThen'));
     },
 
     setAvatar() {
-      let md5sum = md5(get(this, 'entry.email'));
-      set(this, 'entry.avatar', gravatar(md5sum));
-      set(this, 'entry.emailHash', md5sum);
-      tryInvoke(this, 'checkValidity');
+      let md5sum = md5(get(this, 'model.email'));
+      set(this, 'model.avatar', gravatar(md5sum));
+      set(this, 'model.emailHash', md5sum);
     }
   }
 });
