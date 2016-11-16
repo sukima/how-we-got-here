@@ -1,16 +1,12 @@
-/* globals md5 */
 import Ember from 'ember';
 import { POSTLUDE } from '../../utils/preludes';
 import { makeStep } from '../../utils/steps';
 import Form from 'ember-bootstrap/components/bs-form';
+import AvatarUpdaterMixin from '../../mixins/avatar-updater';
 
-const { Component, get, set, computed, computed: { reads } } = Ember;
+const { Component, get, computed, computed: { reads } } = Ember;
 
-function gravatar(md5sum) {
-  return `//www.gravatar.com/avatar/${md5sum}`;
-}
-
-export default Component.extend({
+export default Component.extend(AvatarUpdaterMixin, {
   postlude: POSTLUDE,
   needsEmail: true,
 
@@ -46,12 +42,6 @@ export default Component.extend({
 
     addStep() {
       get(this, 'model.steps').pushObject(makeStep('andThen'));
-    },
-
-    setAvatar() {
-      let md5sum = md5(get(this, 'model.email'));
-      set(this, 'model.avatar', gravatar(md5sum));
-      set(this, 'model.emailHash', md5sum);
     }
   }
 });

@@ -28,7 +28,7 @@
       propertyName="email"
       required=true
       placeholder=(fake-email)
-      update=(action "setAvatar")}}
+      update=(action "setAvatar" model)}}
     {{email-help-block tagName="" hashValue=(readonly model.email)}}
   {{/entries/edit-field}}
 {{/if}}
