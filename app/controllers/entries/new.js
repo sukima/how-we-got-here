@@ -3,13 +3,14 @@ import { task } from 'ember-concurrency';
 import { validatePresence, validateFormat } from 'ember-changeset-validations/validators';
 import EntryValidations from '../../validations/entry';
 import validateUniqueHash from '../../validators/validate-unique-hash';
+import AvatarUpdaterMixin from '../../mixins/avatar-updater';
 
 const {
   Controller, getProperties, assign,
   computed, computed: { alias, mapBy }
 } = Ember;
 
-export default Controller.extend({
+export default Controller.extend(AvatarUpdaterMixin, {
   entryValidations: computed('emailHashes', {
     get() {
       return assign({}, EntryValidations, {

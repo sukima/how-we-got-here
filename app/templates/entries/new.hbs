@@ -1,7 +1,18 @@
 <h1>Add a new entry</h1>
 
 {{#bs-form model=(changeset model entryValidations) action=(perform save)}}
-  {{entries/edit-form}}
+  {{#entries/edit-form as |changesetModel|}}
+    {{#entries/edit-field
+        type="email"
+        size=50
+        label="Email:"
+        propertyName="email"
+        required=true
+        placeholder=(fake-email)
+        update=(action "setAvatar" changesetModel)}}
+      {{email-help-block tagName="" hashValue=(readonly changesetModel.email)}}
+    {{/entries/edit-field}}
+  {{/entries/edit-form}}
 
   {{#bs-form-group}}
     <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>

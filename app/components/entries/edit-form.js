@@ -2,13 +2,11 @@ import Ember from 'ember';
 import { POSTLUDE } from '../../utils/preludes';
 import { makeStep } from '../../utils/steps';
 import Form from 'ember-bootstrap/components/bs-form';
-import AvatarUpdaterMixin from '../../mixins/avatar-updater';
 
 const { Component, get, computed, computed: { reads } } = Ember;
 
-export default Component.extend(AvatarUpdaterMixin, {
+export default Component.extend({
   postlude: POSTLUDE,
-  needsEmail: true,
 
   model: reads('form.model'),
   form: computed(function() {

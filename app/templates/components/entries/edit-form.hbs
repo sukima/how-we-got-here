@@ -20,18 +20,7 @@
     propertyName="href"
     placeholder=(fake-url)}}
 
-{{#if needsEmail}}
-  {{#entries/edit-field
-      type="email"
-      size=50
-      label="Email:"
-      propertyName="email"
-      required=true
-      placeholder=(fake-email)
-      update=(action "setAvatar" model)}}
-    {{email-help-block tagName="" hashValue=(readonly model.email)}}
-  {{/entries/edit-field}}
-{{/if}}
+{{yield model}}
 
 <div class="row">
   <div class="col-lg-7">
