@@ -7,14 +7,14 @@ export default Route.extend({
 
   model() {
     return RSVP.hash({
-      entries: this.modelFor('entries'),
+      emailHashes: this.modelFor('entries').mapBy('emailHash'),
       newEntry: get(this, 'store').createRecord('entry')
     });
   },
 
-  setupController(controller, {entries, newEntry}) {
+  setupController(controller, {emailHashes, newEntry}) {
     set(controller, 'model', newEntry);
-    set(controller, 'entries', entries);
+    set(controller, 'emailHashes', emailHashes);
   },
 
   resetController(controller, isExiting) {

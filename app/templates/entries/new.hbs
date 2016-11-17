@@ -14,6 +14,26 @@
     {{/entries/edit-field}}
   {{/entries/edit-form}}
 
+  <div class="row">
+    {{#entries/edit-field
+        class="col-sm-6"
+        type="password"
+        size="50"
+        label="Recovery Code:"
+        propertyName="recoveryCode"
+        required=true}}
+      <span class="help-block">Used to recover login credentials.</span>
+    {{/entries/edit-field}}
+
+    {{entries/edit-field
+        class="col-sm-6"
+        type="password"
+        size="50"
+        label="Confirm Recovery Code:"
+        propertyName="recoveryCodeConfirm"
+        required=true}}
+  </div>
+
   {{#bs-form-group}}
     <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
       <span class="glyphicon glyphicon-chevron-left"></span>
