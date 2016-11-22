@@ -1,9 +1,9 @@
 <h1>Edit your entry</h1>
 
-{{!#bs-form model=(changeset model entryValidations) action=(perform save)}}
-  {{!entries/edit-form}}
+{{#bs-form model=(changeset model entryValidations)}} {{!action=(perform save)}}
+  {{entries/edit-form}}
 
-  {{!#bs-form-group}}
+  {{#bs-form-group}}
     <button type="button" class="btn btn-default" disabled={{saving}} onclick={{!action "cancel"}}>
       <span class="glyphicon glyphicon-chevron-left"></span>
       Cancel
@@ -16,11 +16,12 @@
 
     <span class="spacer"></span>
 
-    {{!confirm-button
+    {{confirm-button
         icon="glyphicon-trash"
         label="Delete entry"
         confirmLabel="Are you sure (click again)? You can not undo this!"
         confirmed=(action "deleteRecord")}}
-    {{!#if saving}}<span>Saving&hellip;</span>{{!/if}}
-  {{!/bs-form-group}}
-{{!/bs-form}}
+
+    {{#if save.isRunning}}<span>Saving&hellip;</span>{{/if}}
+  {{/bs-form-group}}
+{{/bs-form}}

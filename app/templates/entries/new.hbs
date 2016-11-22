@@ -1,38 +1,7 @@
 <h1>Add a new entry</h1>
 
 {{#bs-form model=(changeset model entryValidations) action=(perform save)}}
-  {{#entries/edit-form as |changesetModel|}}
-    {{#entries/edit-field
-        type="email"
-        size=50
-        label="Email:"
-        propertyName="email"
-        required=true
-        placeholder=(fake-email)
-        update=(action "setAvatar" changesetModel)}}
-      {{email-help-block tagName="" hashValue=(readonly changesetModel.email)}}
-    {{/entries/edit-field}}
-  {{/entries/edit-form}}
-
-  <div class="row">
-    {{#entries/edit-field
-        class="col-sm-6"
-        type="password"
-        size="50"
-        label="Recovery Code:"
-        propertyName="recoveryCode"
-        required=true}}
-      <span class="help-block">Used to recover login credentials.</span>
-    {{/entries/edit-field}}
-
-    {{entries/edit-field
-        class="col-sm-6"
-        type="password"
-        size="50"
-        label="Confirm Recovery Code:"
-        propertyName="recoveryCodeConfirm"
-        required=true}}
-  </div>
+  {{entries/edit-form}}
 
   {{#bs-form-group}}
     <button type="button" class="btn btn-default" disabled={{saving}} onclick={{action "cancel"}}>
@@ -44,5 +13,7 @@
       <span class="glyphicon glyphicon-save"></span>
       Register and Save
     </button>
+
+    {{#if save.isRunning}}<span>Saving&hellip;</span>{{/if}}
   {{/bs-form-group}}
 {{/bs-form}}

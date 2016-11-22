@@ -20,7 +20,16 @@
     propertyName="href"
     placeholder=(fake-url)}}
 
-{{yield model}}
+{{#entries/edit-field
+    type="email"
+    size=50
+    label="Email:"
+    propertyName="email"
+    required=model.isNew
+    placeholder=(if model.isNew (fake-email) '******@******.***')
+    update=(action "setAvatar" model)}}
+  {{email-help-block tagName="" hashValue=(readonly model.email)}}
+{{/entries/edit-field}}
 
 <div class="row">
   <div class="col-lg-7">
@@ -85,4 +94,24 @@
   <div class="col-lg-5">
     {{entry-card class="box with-shadow" entry=model}}
   </div>
+</div>
+
+<div class="row">
+  {{#entries/edit-field
+      class="col-sm-6"
+      type="password"
+      size="50"
+      label="Recovery Code:"
+      propertyName="recoveryCode"
+      required=model.isNew}}
+    <span class="help-block">Used to recover login credentials.</span>
+  {{/entries/edit-field}}
+
+  {{entries/edit-field
+      class="col-sm-6"
+      type="password"
+      size="50"
+      label="Confirm Recovery Code:"
+      propertyName="recoveryCodeConfirm"
+      required=model.isNew}}
 </div>
