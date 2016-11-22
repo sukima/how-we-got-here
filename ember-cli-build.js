@@ -19,8 +19,11 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+
+  // Hash email for Gravatars and User Identifiers
   app.import('bower_components/blueimp-md5/js/md5.js');
 
+  // The upper right banner GitHub ribbon link
   app.import('bower_components/github-fork-ribbon-css/gh-fork-ribbon.css');
 
   return app.toTree();

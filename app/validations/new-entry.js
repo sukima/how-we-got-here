@@ -1,15 +1,10 @@
-import {
-  validatePresence, validateFormat, validateLength, validateConfirmation
-} from 'ember-changeset-validations/validators';
+import Ember from 'ember';
+import { validateConfirmation } from 'ember-changeset-validations/validators';
+import recoveryValidations from './recovery';
+import emailValidations from './email';
 
-export default {
-  email: [
-    validatePresence(true),
-    validateFormat({type: 'email'})
-  ],
-  recoveryCode: [
-    validatePresence(true),
-    validateLength({min: 6})
-  ],
+const { assign } = Ember;
+
+export default assign({}, recoveryValidations, emailValidations, {
   recoveryCodeConfirm: validateConfirmation({on: 'recoveryCode'})
-};
+});

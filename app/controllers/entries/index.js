@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import SessionTokenDecoder from '../../mixins/session-token-decoder';
 import { POSTLUDE } from '../../utils/preludes';
 
 const {
@@ -12,7 +11,8 @@ const NullEntryModel = Ember.Object.extend({
   id: 'record-not-found'
 });
 
-export default Controller.extend(SessionTokenDecoder, {
+export default Controller.extend({
+  auth: service(),
   store: service(),
 
   postlude: POSTLUDE,
@@ -31,9 +31,9 @@ export default Controller.extend(SessionTokenDecoder, {
     return entries.filter(entry => entry.hasTerm(query));
   }),
 
-  myEntry: computed('sessionToken.entryId', 'model.@each.id', {
+  myEntry: computed('auth.tokenData.entryId', 'model.@each.id', {
     get() {
-      let myEntryId = get(this, 'sessionToken.entryId');
+      let myEntryId = get(this, 'auth.tokenData.entryId');
       if (isBlank(myEntryId)) {
         return NullEntryModel.create();
       }

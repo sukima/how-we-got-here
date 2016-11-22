@@ -4,5 +4,44 @@
   Dolor vel a natus quasi cum explicabo Ex nisi quas temporibus error impedit. Itaque reiciendis ipsum dolores veniam sed Aliquam commodi ipsam quis commodi illo? Vel incidunt quos atque incidunt
 </p>
 
-<p>Hash: <code>{{model.emailHash}}</code></p>
-<p>Secret: <code>{{model.secret}}</code></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Scan code</h4>
+  </div>
+  <div class="panel-body text-center">
+    {{qr-code width=166 height=166 data=qrCodeData}}
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Manually enter code</h4>
+  </div>
+  <div class="panel-body text-center">
+    <code>{{model.secret}}</code>
+  </div>
+</div>
+
+<div class="alert alert-warning">
+  <span class="glyphicon glyphicon-exclamation-sign"></span>
+  If you do not save the above code the only way to recover you login is to use
+  your <strong>Recovery Code</strong>. We truly hope you have saved it for
+  prosperity.
+</div>
+
+{{auth-verify-form emailHash=(readonly model.emailHash) onverify=(perform authenticate)}}
+
+{{#if warnNotLoggedin}}
+  {{#bs-modal
+      title="You have not logged in yet!"
+      closedAction=(action (mut warnNotLoggedin) false)}}
+    <div class="alert alert-danger">
+      <span class="glyphicon glyphicon-warning-sign"></span>
+      <em>You can not return to this page.</em> You must save the code to an
+      authenticator application. The best way we know that you have done this
+      is to log in. If you loose this the only way to recover your account is
+      to use your <strong>Recovery Code</strong> which we hope you have saved
+      for prosperity.
+    </div>
+  {{/bs-modal}}
+{{/if}}

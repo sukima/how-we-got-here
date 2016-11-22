@@ -1,0 +1,21 @@
+{{#bs-form model=(changeset this verificationValidations) action=(perform verifyCode)}}
+  {{#unless emailHash}}
+    {{#bs-form-element label="Email" property="email" as |value formElementId|}}
+      {{bs-input type="email" required=true value=value id=formElementId}}
+      {{email-help-block hashValue=(readonly value)}}
+    {{/bs-form-element}}
+  {{/unless}}
+
+  {{bs-form-element
+      controlType="number"
+      label="Verification Token"
+      property="verificationToken"
+      required=true}}
+
+  <button type="submit" class="btn btn-block btn-primary" disabled={{verifyCode.isRunning}}>
+    <span class="glyphicon glyphicon-log-in"></span>
+    Authenticate
+  </button>
+
+  {{yield}}
+{{/bs-form}}

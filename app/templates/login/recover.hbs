@@ -2,20 +2,20 @@
 
 <p>Sorry to hear that you lost your authenticator identity. When you first registered you sealed the deal with a secret. Now is the time to resurecct that secret and enter it in below. Then a new authenticator QR Code will render for you.</p>
 
-<div class="form-group">
-  <label class="control-label" for="recover-email">Email</label>
-  {{input type="email" id="recover-email" class="form-control" value=email}}
-  {{email-help-block hashValue=(readonly email)}}
-</div>
+{{#bs-form model=(changeset this recoveryValidations) action=(perform recoverIdentity)}}
+  {{#bs-form-element label="Email" property="email" as |value formElementId|}}
+    {{bs-input type="email" required=true value=value id=formElementId}}
+    {{email-help-block hashValue=(readonly value)}}
+  {{/bs-form-element}}
 
-<div class="form-group">
-  <label class="control-label" for="recover-pepper">Secret</label>
-  {{input type="password" id="recover-pepper" class="form-control" value=pepper}}
-</div>
+  {{bs-form-element
+      controlType="password"
+      label="Recovery Code"
+      property="recoveryCode"
+      required=true}}
 
-<div class="form-group">
-  <button type="submit" class="btn btn-block btn-primary" onclick={{action "recover"}}>
+  <button type="submit" class="btn btn-block btn-primary" disabled={{recoverIdentity.isRunning}}>
     <span class="glyphicon glyphicon-qrcode"></span>
     Recover identity
   </button>
-</div>
+{{/bs-form}}

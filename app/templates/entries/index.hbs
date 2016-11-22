@@ -19,8 +19,8 @@
     {{/link-to}}
   {{/if}}
 
-  {{#if session.isAuthenticated}}
-    <button type="button" class="btn btn-link" onclick={{action "invalidateSession"}}>
+  {{#if auth.isLoggedIn}}
+    <button type="button" class="btn btn-default" onclick={{perform auth.invalidate}}>
       <span class="glyphicon glyphicon-log-out"></span>
       Logout
     </button>

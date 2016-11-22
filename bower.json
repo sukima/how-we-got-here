@@ -5,6 +5,7 @@
     "ember-cli-shims": "0.1.1",
     "blueimp-md5": "^2.4.0",
     "bootstrap": "~3.3.5",
-    "github-fork-ribbon-css": "^0.2.0"
+    "github-fork-ribbon-css": "^0.2.0",
+    "qrcode": "^1.0.2"
   }
 }
