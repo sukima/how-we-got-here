@@ -40,9 +40,16 @@
           <th>Sentence</th>
         </tr>
       </thead>
-      <tbody>
+      {{#sortable-objects
+          tagName="tbody"
+          useSwap=false
+          sortableObjectList=model.steps}}
         {{#each model.steps as |step index|}}
-          <tr>
+          {{#draggable-object
+              tagName="tr"
+              dragHandle=".drag-handle"
+              content=step
+              isSortable=(gte index 1)}}
             <td nowrap style="min-width: 130px">
               {{#unless (readonly-prelude step.prelude)}}
                 <button type="button" class="btn btn-warning btn-sm" onclick={{action "removeStep" index}}>
@@ -50,14 +57,15 @@
                   <span class="sr-only">Remove</span>
                 </button>
                 &nbsp;
-                <button type="button" class="btn btn-default btn-sm" disabled={{lte index 1}} onclick={{action "moveStepUp" index}}>
+                <button type="button" class="invisible btn btn-default btn-sm" disabled={{lte index 1}} onclick={{action "moveStepUp" index}}>
                   <span class="glyphicon {{if (lte index 1) 'glyphicon-triangle-top' 'glyphicon-chevron-up'}}"></span>
                   <span class="sr-only">Move up</span>
                 </button>
-                <button type="button" class="btn btn-default btn-sm" disabled={{is-last index model.steps}} onclick={{action "moveStepDown" index}}>
+                <button type="button" class="invisible btn btn-default btn-sm" disabled={{is-last index model.steps}} onclick={{action "moveStepDown" index}}>
                   <span class="glyphicon {{if (is-last index model.steps) 'glyphicon-triangle-bottom' 'glyphicon-chevron-down'}}"></span>
                   <span class="sr-only">Move down</span>
                 </button>
+                <span class="drag-handle glyphicon glyphicon-menu-hamburger"></span>
               {{/unless}}
             </td>
             <td>
@@ -75,7 +83,7 @@
                 <span class="input-group-addon">.</span>
               </div>
             </td>
-          </tr>
+          {{/draggable-object}}
         {{/each}}
         <tr>
           <td></td>
@@ -87,7 +95,7 @@
           <td></td>
           <td>{{postlude}}.</td>
         </tr>
-      </tbody>
+      {{/sortable-objects}}
     </table>
   </div>
 
