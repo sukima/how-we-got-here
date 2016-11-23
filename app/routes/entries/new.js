@@ -1,11 +1,15 @@
 import Ember from 'ember';
+import { CanMixin } from 'ember-can';
 
 const { Route, get, set, inject: { service }, RSVP } = Ember;
 
-export default Route.extend({
+export default Route.extend(CanMixin, {
   store: service(),
 
   model() {
+    if (!this.can('create entry')) {
+      return this.transitionTo('entries');
+    }
     return RSVP.hash({
       emailHashes: this.modelFor('entries').mapBy('emailHash'),
       newEntry: get(this, 'store').createRecord('entry')
