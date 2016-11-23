@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import recoveryValidations from './recovery-code/required';
+import recoveryValidations from './recovery-code/optional';
 import emailValidations from './email';
 
 const { assign } = Ember;
